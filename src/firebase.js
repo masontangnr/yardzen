@@ -18,10 +18,10 @@ export const db = getFirestore(app);
 
 
 // Get a list of cities from your database
-export const getItems = async (db, setItem) => {
+export const getItems = async (db, setItems) => {
   const itemsCol = collection(db, 'items');
   const itemSnapshot = await getDocs(itemsCol);
   const itemList = itemSnapshot.docs.map(doc => doc.data());
-  setItem(itemList)
+  setItems(itemList)
   return itemList;
 }
