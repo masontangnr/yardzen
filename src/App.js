@@ -4,33 +4,50 @@ import { getItems, db } from "./firebase";
 
 function App() {
 	const [items, setItems] = useState([]);
-  let [lowPrice, setLowPrice] = useState(0);
-  let [highPrice, setHighPrice] = useState(0);
+	let [waterLow, setWaterLow] = useState(0);
+	let [structureLow, setStructureLow] = useState(0);
+	let [lightLow, setLightLow] = useState(0);
+	let [groundLow, setGroundLow] = useState(0);
+	let [deckLow, setDeckLow] = useState(0);
+	let [fencingLow, setFencingLow] = useState(0);
+	let [waterHigh, setWaterHigh] = useState(0);
+	let [structureHigh, setStructureHigh] = useState(0);
+	let [lightHigh, setLightHigh] = useState(0);
+	let [groundHigh, setGroundHigh] = useState(0);
+	let [deckHigh, setDeckHigh] = useState(0);
+	let [fencingHigh, setFencingHigh] = useState(0);
 
 	useEffect(() => {
 		getItems(db, setItems);
 	}, []);
 
-  const handleChange=(e)=>{
-       setLowPrice( lowPrice += e.target.value);    
-  }
-console.log(items)
+	const handleChange = (e) => {
+    const prices = e.target.value.split(',')
+		setWaterLow(Number(prices[0]));
+	};
+	console.log(waterLow);
 	const displayWaterFeatures = () => {
 		return items.map(
 			(item, key) =>
 				item.type === "WATER_FEATURES" && (
 					<>
-          
-            <input type="radio" value={item.lowPrice} id={item.type}
-               onChange={handleChange} name={item.type} />
-             <label for={item.type}>{item.name}</label>
-						
+						<label for={item.type}>
+							<input
+								type='radio'
+								value={[item.lowPrice,item.highPrice]}
+								id={item.type}
+								onClick={handleChange}
+								name={item.type}
+							/>
+							{item.name}
+							{item.lowPrice}
+						</label>
 					</>
 				)
 		);
 	};
 
-  console.log(lowPrice)
+	// console.log(waterLow);
 
 	const displayStructures = () => {
 		return items.map(
