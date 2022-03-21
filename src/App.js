@@ -23,9 +23,16 @@ function App() {
 
 	const handleChange = (e) => {
     const prices = e.target.value.split(',')
-		setWaterLow(Number(prices[0]));
+    if(Number(prices[0]) === waterLow){
+      setWaterLow("")
+      e.target.checked = false
+    } else{
+      setWaterLow(Number(prices[0]))
+    }
 	};
-	console.log(waterLow);
+
+console.log(waterLow)
+
 	const displayWaterFeatures = () => {
 		return items.map(
 			(item, key) =>
@@ -39,8 +46,9 @@ function App() {
 								onClick={handleChange}
 								name={item.type}
 							/>
-							{item.name}
-							{item.lowPrice}
+							<span>{item.name}</span>
+              <p>Price Range: ${item.lowPrice.toLocaleString("en-US")} to ${item.highPrice.toLocaleString("en-US")}</p>
+							
 						</label>
 					</>
 				)
