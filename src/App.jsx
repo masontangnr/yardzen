@@ -5,6 +5,7 @@ import "./index.scss";
 
 function App() {
 	const [items, setItems] = useState([]);
+  let [budget, setBudget] = useState(0);
 	let [waterLow, setWaterLow] = useState(0);
 	let [structureLow, setStructureLow] = useState(0);
 	let [lightLow, setLightLow] = useState(0);
@@ -17,40 +18,41 @@ function App() {
 	let [groundHigh, setGroundHigh] = useState(0);
 	let [deckHigh, setDeckHigh] = useState(0);
 	let [fencingHigh, setFencingHigh] = useState(0);
+  let [radioKey, setRadioKey] = useState(null)
 
 	useEffect(() => {
 		getItems(db, setItems);
 	}, []);
 
 	const handleChange = (e) => {
-
 		const prices = e.target.value.split(",");
-		if (Number(prices[0]) === waterLow) {
+		if (e.target.id === radioKey) {
 			setWaterLow("");
+      setWaterHigh("");
+      setRadioKey(null)
 			e.target.checked = false;
 		} else {
 			setWaterLow(Number(prices[0]));
-      e.target.checked = true;
+      setWaterHigh(Number(prices[1]));
+      setRadioKey(e.target.id)
+			e.target.checked = true;
 		}
-    console.log(e.target.checked)
 	};
-
-	console.log(waterLow);
 
 	const displayWaterFeatures = () => {
 		return items.map(
 			(item, key) =>
 				item.type === "WATER_FEATURES" && (
 					<>
-						<label>
-							<input
-								type='radio'
-								value={[item.lowPrice, item.highPrice]}
-								id={item.type}
-								onClick={handleChange}
-								name={item.type}
-							/>
-							<span>{item.name}</span>
+						<input
+							type='radio'
+							value={[item.lowPrice, item.highPrice]}
+							id={key}
+							onClick={handleChange}
+							name={item.type}
+						/>
+						<label htmlFor={key}>
+            <span>{item.name}</span>
 							<p>
 								Price Range: ${item.lowPrice.toLocaleString("en-US")} to $
 								{item.highPrice.toLocaleString("en-US")}
@@ -118,18 +120,37 @@ function App() {
 		);
 	};
 
+  const withinBudget = () => {
+    return (
+      <>
+        {waterLow > budget &&
+        <p>The items you have selected are out of your price range</p>
+        }
+        {waterLow <= budget &&
+        <p>The items you have selected are within your price range</p>
+        }     
+      </>
+    )
+  }
+
 	return (
 		<div className=''>
 			<h1>Please enter a budget for your project</h1>
-			<input type='text' />
+			<input type='text' onInput={e => setBudget(e.target.value)}/>
 			<h3>Select items to be added to your home (select one item per type)</h3>
-			<h5>Water Features</h5>
+			<h5 className='title'>Water Features</h5>
 			<div className='container'>{displayWaterFeatures()}</div>
 			<h5>Structures</h5>
 			<h5>Lighting</h5>
 			<h5>Ground Cover</h5>
 			<h5>Deck Material</h5>
 			<h5>Fencing and Privacy</h5>
+      <div className="footer">
+      <p>Your budget is ${budget}</p>
+        <p>Your estimated cost is from ${waterLow.toLocaleString("en-US")} to ${waterHigh.toLocaleString("en-US")} </p>
+        <p>{withinBudget()}</p>
+      </div>
+
 		</div>
 	);
 }
