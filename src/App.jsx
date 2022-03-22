@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import { getItems, db } from "./firebase";
+import "./index.scss";
 
 function App() {
 	const [items, setItems] = useState([]);
@@ -22,33 +23,38 @@ function App() {
 	}, []);
 
 	const handleChange = (e) => {
-    const prices = e.target.value.split(',')
-    if(Number(prices[0]) === waterLow){
-      setWaterLow("")
-      e.target.checked = false
-    } else{
-      setWaterLow(Number(prices[0]))
-    }
+
+		const prices = e.target.value.split(",");
+		if (Number(prices[0]) === waterLow) {
+			setWaterLow("");
+			e.target.checked = false;
+		} else {
+			setWaterLow(Number(prices[0]));
+      e.target.checked = true;
+		}
+    console.log(e.target.checked)
 	};
 
-console.log(waterLow)
+	console.log(waterLow);
 
 	const displayWaterFeatures = () => {
 		return items.map(
 			(item, key) =>
 				item.type === "WATER_FEATURES" && (
 					<>
-						<label for={item.type}>
+						<label>
 							<input
 								type='radio'
-								value={[item.lowPrice,item.highPrice]}
+								value={[item.lowPrice, item.highPrice]}
 								id={item.type}
 								onClick={handleChange}
 								name={item.type}
 							/>
 							<span>{item.name}</span>
-              <p>Price Range: ${item.lowPrice.toLocaleString("en-US")} to ${item.highPrice.toLocaleString("en-US")}</p>
-							
+							<p>
+								Price Range: ${item.lowPrice.toLocaleString("en-US")} to $
+								{item.highPrice.toLocaleString("en-US")}
+							</p>
 						</label>
 					</>
 				)
@@ -118,7 +124,7 @@ console.log(waterLow)
 			<input type='text' />
 			<h3>Select items to be added to your home (select one item per type)</h3>
 			<h5>Water Features</h5>
-			{displayWaterFeatures()}
+			<div className='container'>{displayWaterFeatures()}</div>
 			<h5>Structures</h5>
 			<h5>Lighting</h5>
 			<h5>Ground Cover</h5>
