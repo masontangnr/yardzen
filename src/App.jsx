@@ -5,7 +5,7 @@ import "./index.scss";
 
 function App() {
 	const [items, setItems] = useState([]);
-  let [budget, setBudget] = useState(0);
+	let [budget, setBudget] = useState(0);
 	let [waterLow, setWaterLow] = useState(0);
 	let [structureLow, setStructureLow] = useState(0);
 	let [lightLow, setLightLow] = useState(0);
@@ -18,7 +18,8 @@ function App() {
 	let [groundHigh, setGroundHigh] = useState(0);
 	let [deckHigh, setDeckHigh] = useState(0);
 	let [fencingHigh, setFencingHigh] = useState(0);
-  let [radioKey, setRadioKey] = useState(null)
+	let [radioKey, setRadioKey] = useState(null);
+  let [showItems, setShowItems] = useState(false);
 
 	useEffect(() => {
 		getItems(db, setItems);
@@ -28,13 +29,13 @@ function App() {
 		const prices = e.target.value.split(",");
 		if (e.target.id === radioKey) {
 			setWaterLow("");
-      setWaterHigh("");
-      setRadioKey(null)
+			setWaterHigh("");
+			setRadioKey(null);
 			e.target.checked = false;
 		} else {
 			setWaterLow(Number(prices[0]));
-      setWaterHigh(Number(prices[1]));
-      setRadioKey(e.target.id)
+			setWaterHigh(Number(prices[1]));
+			setRadioKey(e.target.id);
 			e.target.checked = true;
 		}
 	};
@@ -52,11 +53,11 @@ function App() {
 							name={item.type}
 						/>
 						<label htmlFor={key}>
-            <span>{item.name}</span>
-							<p>
+							<p>{item.name}</p>
+							<span>
 								Price Range: ${item.lowPrice.toLocaleString("en-US")} to $
 								{item.highPrice.toLocaleString("en-US")}
-							</p>
+							</span>
 						</label>
 					</>
 				)
@@ -120,37 +121,56 @@ function App() {
 		);
 	};
 
-  const withinBudget = () => {
-    return (
-      <>
-        {waterLow > budget &&
-        <p>The items you have selected are out of your price range</p>
-        }
-        {waterLow <= budget &&
-        <p>The items you have selected are within your price range</p>
-        }     
-      </>
-    )
-  }
+	const withinBudget = () => {
+		return (
+			<>
+				{waterLow > budget && (
+					<p>The items you have selected are out of your price range</p>
+				)}
+				{waterLow <= budget && (
+					<p>The items you have selected are within your price range</p>
+				)}
+			</>
+		);
+	};
+
+	const displayItems = () => {
+		return (
+			<>
+				<h3>
+					Select items to be added to your home (select one item per type)
+				</h3>
+				<h5 className='title'>Water Features</h5>
+				<div className='container'>{displayWaterFeatures()}</div>
+				<h5>Structures</h5>
+				<h5>Lighting</h5>
+				<h5>Ground Cover</h5>
+				<h5>Deck Material</h5>
+				<h5>Fencing and Privacy</h5>
+				<div className='footer'>
+					<p>Your budget is ${Number(budget).toLocaleString("en-US")}</p>
+					<p>
+						Your estimated cost is from ${waterLow.toLocaleString("en-US")} to $
+						{waterHigh.toLocaleString("en-US")}{" "}
+					</p>
+					<p>{withinBudget()}</p>
+				</div>
+			</>
+		);
+	};
 
 	return (
-		<div className=''>
-			<h1>Please enter a budget for your project</h1>
-			<input type='text' onInput={e => setBudget(e.target.value)}/>
-			<h3>Select items to be added to your home (select one item per type)</h3>
-			<h5 className='title'>Water Features</h5>
-			<div className='container'>{displayWaterFeatures()}</div>
-			<h5>Structures</h5>
-			<h5>Lighting</h5>
-			<h5>Ground Cover</h5>
-			<h5>Deck Material</h5>
-			<h5>Fencing and Privacy</h5>
-      <div className="footer">
-      <p>Your budget is ${budget}</p>
-        <p>Your estimated cost is from ${waterLow.toLocaleString("en-US")} to ${waterHigh.toLocaleString("en-US")} </p>
-        <p>{withinBudget()}</p>
-      </div>
-
+		<div className='container'>
+			<h1>What's your budget for your dream home?</h1>
+			<div className='flex'>
+				<input
+					type='text'
+					placeholder='20,000,000'
+					onInput={(e) => setBudget(e.target.value)}
+				/>
+				<button onClick={() => setShowItems(true)}>Submit</button>
+			</div>
+      {showItems ? displayItems() : null}
 		</div>
 	);
 }
