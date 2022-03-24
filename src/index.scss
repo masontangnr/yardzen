@@ -5,12 +5,12 @@ body {
 		sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
-*{
-  margin:0;
-  padding:0;
-  box-sizing:inherit;
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: inherit;
 }
 
 code {
@@ -42,11 +42,10 @@ label {
 	box-shadow: 0px 3px 10px -2px hsla(150, 5%, 65%, 0.5);
 	position: relative;
 }
-input[type="radio"]:checked + label{
+input[type="radio"]:checked + label {
 	background: #becbbe;
 	color: hsla(215, 0%, 100%, 1);
 	box-shadow: 0px 0px 20px #becbbe;
-	
 }
 input[type="radio"]#control_05:checked + label {
 	background: red;
@@ -55,61 +54,70 @@ input[type="radio"]#control_05:checked + label {
 p {
 	font-weight: 900;
 }
-.footer{
-  background-color: #FBF3EB;
-  padding: 10px;
-  position:sticky;
-  bottom: 0;
+.footer {
+	background-color: #fbf3eb;
+	padding: 10px;
+	position: sticky;
+	bottom: 0;
 }
-h5.title{
-  background-color: grey;
-  color:black;
+h5.title {
+	background-color: grey;
+	color: black;
 }
-.container{
-  max-width: 1200px;
-  margin-left:auto;
-  margin-right:auto;
+.container {
+	max-width: 1200px;
+	margin-left: auto;
+	margin-right: auto;
 }
-input{
-  border:1px solid black !important;
-  padding: 1em;
-  margin-bottom: 20px;
-  width: 300px;
-  font-size: 15px;
+input {
+	border: 1px solid black !important;
+	padding: 1em;
+	margin-bottom: 20px;
+	width: 300px;
+	font-size: 15px;
 }
-h1{
-  font-size: 30px;
-  font-weight: 400;
-  margin-bottom: 20px;
-  margin-top: 20px;
+h1 {
+	font-size: 30px;
+	font-weight: 400;
+	margin-bottom: 20px;
+	margin-top: 20px;
 }
-h3{
-  font-size:25px;
-  font-weight: 400;
-  margin-top: 20px;
+h3 {
+	font-size: 25px;
+	font-weight: 400;
+	margin-top: 20px;
 }
-h5{
-  font-size:25px;
-  font-weight: 400;
-  margin-top: 20px;
-  background-color: #F2F5F2 !important;
-  padding: 10px;
-  margin-bottom: 20px;
+h5 {
+	font-size: 25px;
+	font-weight: 400;
+	margin-top: 20px;
+	background-color: #f2f5f2 !important;
+	padding: 10px;
+	margin-bottom: 20px;
 }
-.flex{
-  display:flex;
+.flex {
+	display: flex;
 }
-button{
-  background-color: black;
-  color:white;
-  border: 1px solid black;
-  border-radius: 1px;
-  font-size: 15px;
-  font-weight: 600;
-  height: 49px;
-  width: 110px;
-  margin-left: 10px;
+.submit {
+	background-color: black;
+	color: white;
+	border: 1px solid black;
+	border-radius: 1px;
+	font-size: 15px;
+	font-weight: 600;
+	height: 49px;
+	width: 110px;
+	margin-left: 10px;
 }
-.hide{
-display:none;
+.hide {
+	display: none;
+}
+.green {
+	color: green;
+}
+.red {
+	color: red;
+}
+.yellow {
+	color: yellow;
 }
